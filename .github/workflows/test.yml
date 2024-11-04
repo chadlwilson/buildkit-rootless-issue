@@ -21,6 +21,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - run: |
-          name=$(docker ps -q)
+          name=$(docker ps -q | head -n 1)
           docker cp $(pwd) $name:/build
           docker exec -i $name sh -c "cd /build && ./build.sh"
