@@ -9,17 +9,15 @@ on:
 jobs:
   ubuntu:
     runs-on: ubuntu-latest
-
-    services:
-      docker:
-        image: docker:27-dind
-        options: --privileged --shm-size=2g
-        command: --host=unix:///var/run/docker.sock
-
     steps:
       - uses: actions/checkout@v4
 
       - run: |
-          name=$(docker ps -q | head -n 1)
-          docker cp $(pwd) $name:/build
-          docker exec -i $name sh -c "cd /build && ./build.sh"
+          docker info
+          docker run -d --name some-docker -v $(pwd):/build --privileged docker:27-dind --host=unix:///var/run/docker.sock
+          docker exec -i some-docker sh -c "cd /build && ./build.sh"
+
+      - run: |
+          docker logs some-docker
+          docker rm -f some-docker
+        if: always()
