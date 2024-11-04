@@ -17,5 +17,5 @@ jobs:
 
       - run: |
           docker run -d --name some-docker -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/tmp --privileged docker:27-dind
-          docker exec -i some-docker sh -c "cd /tmp && ./build.sh"
+          docker exec -i some-docker -- sh -c "cd /tmp && ./build.sh"
           docker rm -f some-docker
