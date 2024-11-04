@@ -12,6 +12,7 @@ jobs:
 
     services:
       docker:
+        name: docker-dind
         image: docker:27-dind
         options: --privileged --shm-size=2g
         volumes:
@@ -21,5 +22,5 @@ jobs:
       - uses: actions/checkout@v4
 
       - run: |
-          docker cp $(pwd) docker:/build
-          docker exec -i docker sh -c "cd /build && ./build.sh"
+          docker cp $(pwd) docker-dind:/build
+          docker exec -i docker-dind sh -c "cd /build && ./build.sh"
