@@ -14,7 +14,7 @@ jobs:
 
       - run: |
           docker info
-          docker run -d --name some-docker -v $(pwd):/build --privileged --entrypoint dockerd docker:27-dind --host=unix:///var/run/docker.sock
+          docker run -d --name some-docker -v $(pwd):/build --privileged -e DOCKER_OPTS="--storage-driver=fuse-overlayfs" --entrypoint dockerd docker:27-dind --host=unix:///var/run/docker.sock
           docker exec -i some-docker sh -c "cd /build && ./build.sh"
 
       - run: |
