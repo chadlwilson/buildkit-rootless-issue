@@ -2,7 +2,6 @@
 set -ex
 
 docker info
-docker buildx version
 
 for buildkit in "v0.16.0" "v0.17.0"; do
   echo "Building with $buildkit"
