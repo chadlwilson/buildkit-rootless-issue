@@ -9,13 +9,23 @@ on:
 jobs:
   ubuntu:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dind-image:
+          - docker:27-dind
+          - gocddev/gocd-dev-build:centos-9-v3.19.5
+        buildkit-version:
+          - v0.16.0
+          - v0.17.0
     steps:
       - uses: actions/checkout@v4
 
-      - run: |
+      - name: Buildx with buildkit ${{ matrix.buildkit-version }} inside ${{ matrix.dind-image }}
+        run: |
           docker info
-          docker run -d --name some-docker -v $(pwd):/build --privileged --user root --entrypoint dockerd gocddev/gocd-dev-build:centos-9-v3.19.5 --host=unix:///var/run/docker.sock
-          docker exec -i some-docker sh -c "cd /build && ./build.sh"
+          docker run -d --name some-docker -v $(pwd):/build --privileged --user root --entrypoint dockerd ${{ matrix.dind-image }} --host=unix:///var/run/docker.sock
+          docker exec -i -e BUILDKIT_VERSION=${{ matrix.buildkit-version }} some-docker sh -c "cd /build && ./build.sh"
 
       - run: |
           docker logs some-docker
