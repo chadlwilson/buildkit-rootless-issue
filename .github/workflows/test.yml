@@ -13,7 +13,7 @@ jobs:
     services:
       docker:
         image: docker:27-dind
-        options: --privileged --shm-size=2g
+        options: --privileged --shm-size=2g --host=unix:///var/run/docker.sock
 
     steps:
       - uses: actions/checkout@v4
