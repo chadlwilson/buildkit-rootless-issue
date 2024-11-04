@@ -4,5 +4,5 @@ RUN curl --fail --location --silent --show-error "https://download.gocd.org/bina
     unzip -q /tmp/go-agent-24.4.0-19686.zip -d / && \
     mv -v /go-agent-24.4.0 /go-agent
 
-FROM cgr.dev/chainguard/wolfi-base
+FROM scratch
 COPY --from=download-and-unzip /go-agent /go-agent
