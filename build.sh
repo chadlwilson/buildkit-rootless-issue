@@ -1,8 +1,6 @@
 #!/bin/sh
 set -ex
 
-docker info
-
 for buildkit in "v0.16.0" "v0.17.0"; do
   echo "Building with $buildkit"
   docker buildx rm --force tmp-builder || true
