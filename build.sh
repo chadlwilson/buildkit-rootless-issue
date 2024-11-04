@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 set -e
 
 for buildkit in "v0.16.0" "v0.17.0"; do
