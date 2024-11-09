@@ -17,7 +17,7 @@ jobs:
           - gocddev/gocd-dev-build:centos-9-v3.19.5
         buildkit-version:
           - v0.16.0
-          - v0.17.0
+          - v0.17.1
     steps:
       - uses: actions/checkout@v4
 
